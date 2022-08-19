@@ -9,5 +9,11 @@ const users ={
     }
 
 }
+const user ={
+    type: UserType,
+    resolve(parent,args){
+        return User.findById(args.id)
+    }
+}
 
-module.exports ={users};
+module.exports ={users,user};
