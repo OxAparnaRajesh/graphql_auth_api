@@ -6,7 +6,7 @@ const authenticate = async(req,res,next) => {
 
     try {
         const verified = jwt.verify(token, process.env.JWT_SECRET)
-        req.verifiedUser = verified;
+        req.verifiedUser = verified.user;
         console.log("Verification Success!",verified);
         next();
     }

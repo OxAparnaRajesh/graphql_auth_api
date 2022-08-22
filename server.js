@@ -11,8 +11,9 @@ dotenv.config();
 //const {createJwtToken}= require("./util/auth")
 //const{authenticate} = require("./middleware/auth")
 connectDB();
+const {authenticate} = require("./middleware/auth");
 
-//app.use(authenticate)
+app.use(authenticate);
 
 app.get("/",(req,res)=>{
     console.log(req)

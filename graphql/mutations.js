@@ -1,6 +1,6 @@
 const { GraphQLString } = require("graphql");
-const {} = require("./types");
-const {User} = require("../models");
+const { PostType } = require("./types");
+const {User, Post} = require("../models");
 const {createJwtToken} = require("../util/auth");
 
 
@@ -40,4 +40,25 @@ const login ={
 
 }
 
-module.exports ={register,login};
+const addPost = {
+    type: PostType,
+    description: "Create new blog post",
+    args:{
+        title: {type:GraphQLString},
+        body:{type:GraphQLString},
+    },
+    resolve(parent,args,{verifiedUser}){
+        console.log("Verified User", verifiedUser);
+        if(!verifiedUser){
+            throw new Error ("Unauthorized");
+        }
+        const post = new Post({
+            authorId: verifiedUser._id,
+            title:args.title,
+            body:args.body,
+        })
+        return post.save();
+    }
+}
+
+module.exports ={register,login,addPost};
